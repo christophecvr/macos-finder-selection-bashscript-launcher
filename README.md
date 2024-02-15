@@ -9,7 +9,7 @@
 - It is perfect as for example creating a x11 program launcher like for gedit.
 - For that reason I just will also set the .app launcher I made to open
 - documents in finder with the macports installed Gedit 3.38.2.
-- I made use of a very simple apple script which I called FilesSelector.scpt
+- I made a very simple apple script which I called FilesSelector.scpt
 - It is located in submap Resources. This script will just make a POSIX file
 - list array of you're selection and return that as result.
 - Then its is very easy to just set that list into a bash script array.
