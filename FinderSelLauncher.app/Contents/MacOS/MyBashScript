@@ -1,0 +1,31 @@
+#!/bin/sh
+echo "******** Finder Selection Log ***********" > ~/FinderSelLauncher.log
+OLDIFS="$IFS"
+# scripts started in an apple app container do not use the user PATH into ~/.bash_profile file why do not know.
+# If You want this script to start a x11 macports app for example export the full path
+# For homebrew gues it will be /usr/local/bin:/usr/local/sbin:$PATH (I guess) 
+#I removed homebrew since they stopped supporting High Sierra and older.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+apppath="`dirname $0`"
+# the filelist of mac is a array of strings seperated by ", " (comma space)
+# convert this to a array of strings separated by a space which is the default on bash scripting.
+IFS=", "
+filelist=(`osascript $apppath/../Resources/FilesSelector.scpt`)
+IFS="$OLDIFS"
+for I in "${filelist[@]}"
+do
+#We open each selected file or map in finder with : replace the echo to log file with you're desired
+#commands or actions.
+	if [ -f "$I" ] ; then
+		#exec gedit "$I" &> /dev/null &
+		echo "Selected File: $I" >> ~/FinderSelLauncher.log
+	else
+# Yes .app is a directory but on mac the program launcher.
+		if [ ".app" == "`echo $I | grep -o ".app"`" ] ; then
+			echo "The application container is: $I" >> ~/FinderSelLauncher.log
+		else
+			echo "Selected Map: $I" >> ~/FinderSelLauncher.log
+		fi
+	fi		
+done
+exit
