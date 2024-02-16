@@ -15,12 +15,12 @@ do
 # Opening more script or text files at once is possible
 # A selected directory will be ignored.
 	if [ -f "$I" ] ; then
-		exec gedit "$I" &> /dev/null &
+		exec /opt/local/bin/gedit "$I" &> /dev/null &
 	else
-# Yes Gedit-2.app is a directory but on mac the program launcher.
+# Yes Gedit.app is a directory but on mac the program launcher.
 # It will open gedit with a new unsaved document
-		if [ ".app" == "`echo $I | grep -o ".app"`" ] ; then
-			exec gedit &> /dev/null &
+		if [ "Gedit.app" == "`echo $I | grep -o "Gedit.app"`" ] ; then
+			exec /opt/local/bin/gedit &> /dev/null &
 		fi
 	fi		
 done
