@@ -10,7 +10,7 @@ apppath="`dirname $0`"
 # the filelist of mac is a array of strings seperated by ", " (comma space)
 # convert this to a array of strings separated by a space which is the default on bash scripting.
 IFS=", "
-filelist=(`osascript $apppath/../Resources/FilesSelector.scpt`)
+filelist=(`osascript $apppath/../Resources/FilesSelector.applescript`)
 IFS="$OLDIFS"
 for I in "${filelist[@]}"
 do
