@@ -6,8 +6,9 @@ export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 apppath="`dirname $0`"
 # the filelist of mac is a array of strings seperated by ", " (comma space)
 # convert this to a array of strings separated by a space which is the default on bash scripting.
-IFS=", "
-filelist=(`osascript $apppath/../Resources/FilesSelector.scpt`)
+IFS="
+"
+filelist=(`osascript $apppath/../Resources/FilesSelector.applescript`)
 IFS="$OLDIFS"
 for I in "${filelist[@]}"
 do
@@ -19,6 +20,7 @@ do
 	else
 # Yes Gedit.app is a directory but on mac the program launcher.
 # It will open gedit with a new unsaved document
+		#echo "inhoud  van si rechtsreeks opening $I" >> ~/ageditcvr.log
 		if [ "Gedit.app" == "`echo $I | grep -o "Gedit.app"`" ] ; then
 			exec /opt/local/bin/gedit &> /dev/null &
 		fi

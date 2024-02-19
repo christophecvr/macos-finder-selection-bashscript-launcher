@@ -46,6 +46,7 @@
 				<string>b</string>
 				<string>bf</string>
 				<string>brainfuck</string>
+				<string>build</string>
 				<string>c</string>
 				<string>cgi</string>
 				<string>c++</string>
@@ -63,6 +64,7 @@
 				<string>cxx</string>
 				<string>def</string>
 				<string>default</string>
+				<string>diff</string>
 				<string>do</string>
 				<string>dtd</string>
 				<string>dxf</string>
@@ -110,6 +112,7 @@
 				<string>mysql</string>
 				<string>njs</string>
 				<string>p</string>
+				<string>patch</string>
 				<string>ps</string>
 				<string>pas</string>
 				<string>pch</string>
@@ -121,6 +124,7 @@
 				<string>plist</string>
 				<string>pm</string>
 				<string>pod</string>
+				<string>Portfile</string>
 				<string>postgresql</string>
 				<string>pike</string>
 				<string>plist</string>
@@ -251,7 +255,7 @@
 				<string>****</string>
 			</array>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 		</dict>
 	</array>
 </dict>

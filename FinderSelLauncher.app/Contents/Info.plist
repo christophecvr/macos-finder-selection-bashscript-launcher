@@ -33,6 +33,9 @@
 				<string>txt</string>
 				<string>sh</string>
 				<string>plist</string>
+				<string>fold</string>
+				<string>xml</string>
+				<string>html</string>
 			</array>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
@@ -40,6 +43,7 @@
 				<string>text/plain</string>
 				<string>text/x-ruby</string>
 				<string>inode/directory</string>
+				<string>*/*</string>
 			</array>
 			<key>CFBundleTypeName</key>
 			<string>Bash Script Launcher</string>
