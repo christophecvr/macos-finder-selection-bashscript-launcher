@@ -6,6 +6,8 @@ OLDIFS="$IFS"
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 apppath="`dirname $0`"
 # The return of our mac script is just a file list with a line for each selected item in finder
+# Even if a filename does contain \n char it does not brake the output since by constructing the array
+# We use the quoted value off \n not the command. The real linefeed is out of the quotes.
 # First we use IFS change to new line only with a real new line return in. Works on all bashes and sh.
 # We create an array . It's the best way.
 # When working with complicated long file names.
@@ -14,25 +16,29 @@ IFS="
 "
 filelist=(`osascript $apppath/../Resources/FilesSelector.applescript`)
 IFS="$OLDIFS"
+echo "number of selected files ${#filelist[@]}" >> ~/FinderSelLauncher.log
+c=0
 for I in "${filelist[@]}"
 do
 #We open each selected file or map in finder with : replace the echo to log file with you're desired
 #commands or actions.
+	let "c=c+1"
 	if [ -f "$I" ] ; then
 		#exec gedit "$I" &> /dev/null &
-		echo "Selected File: $I" >> ~/FinderSelLauncher.log
+		printf "selected file %02d %s\n" "$c" "$I" >> ~/FinderSelLauncher.log
 	else
 # Yes .app is a directory but on mac the program launcher.
 		if [ ".app" == "`echo $I | grep -o ".app"`" ] ; then
-			echo "The application container is: $I" >> ~/FinderSelLauncher.log
+			printf "The application container is: %s\n" "$I" >> ~/FinderSelLauncher.log
 		else
-			echo "Selected Map: $I" >> ~/FinderSelLauncher.log
+			printf "Selected Map: %02d %s\n" "$c" "$I" >> ~/FinderSelLauncher.log
 		fi
-	fi		
+	fi	
 done
 # For anti IFS Users:
 # Other Bash options to read in the mac array all compliant with sh cause macos stopped the use off bash since catalina I think.
 # This means that mapfile or readarray are not avbl to read in a stdin list into a array..
+echo "Number of records in previous array = $c this should be equal to the number of selected files" >> ~/FinderSelLauncher.log
 echo "" >> ~/FinderSelLauncher.log
 echo "Next way " >> ~/FinderSelLauncher.log
 
@@ -43,14 +49,24 @@ do
 done <<<"`osascript $apppath/../Resources/FilesSelector.applescript`"
 
 echo "Number of records in array: ${#s_array[@]}" >> ~/FinderSelLauncher.log
-echo "Full array: " "${s_array[@]}" >> ~/FinderSelLauncher.log
+printf "Full Array: " >> ~/FinderSelLauncher.log
+printf "%s " "${s_array[@]}" >> ~/FinderSelLauncher.log
+echo "" >> ~/FinderSelLauncher.log
 echo "" >> ~/FinderSelLauncher.log
 c=0
 for K in "${s_array[@]}"
 do
-	echo "record `printf "%02d" $c` $K" >> ~/FinderSelLauncher.log
+	printf "record nr %02d %s\n" "$c" "$K" >> ~/FinderSelLauncher.log
 	let "c=c+1"
+	printf "next record is %s\n" "${s_array[c]}" >> ~/FinderSelLauncher.log 2>> ~/FinderSelLauncher.log
 done
+
+#extra tests
+echo "" >> ~/FinderSelLauncher.log
+echo "Printing with printf" >> ~/FinderSelLauncher.log
+printf "%s\n" "${s_array[@]}"  >> ~/FinderSelLauncher.log
+
+
 # Bash script  4+ version macos stopped using descent bash since Catalina or so.
 # Older macos still using bash used a Hisorical bash version below 4 like High Sierra
 # mapfile does not work there. But if You have a bash adapt the first rule in this script to you're bash path.
