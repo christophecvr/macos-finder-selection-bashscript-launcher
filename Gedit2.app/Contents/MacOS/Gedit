@@ -1,10 +1,11 @@
 #!/bin/sh
-#echo "Gedit app starting log" > ~/ageditcvr.log
+echo "Gedit app starting log" > ~/ageditcvr.log
+echo "check contents dollar $0 $1" >> ~/ageditcvr.log
 OLDIFS="$IFS"
 # scripts started in an apple app container to not use the user PATH why do not know.
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 apppath="`dirname $0`"
-# the filelist of mac is a array of strings seperated by ", " (comma space)
+# the filelist of mac is filele list 
 # convert this to a array of strings separated by a space which is the default on bash scripting.
 IFS="
 "
@@ -20,8 +21,8 @@ do
 	else
 # Yes Gedit.app is a directory but on mac the program launcher.
 # It will open gedit with a new unsaved document
-		#echo "inhoud  van si rechtsreeks opening $I" >> ~/ageditcvr.log
-		if [ "Gedit.app" == "`echo $I | grep -o "Gedit.app"`" ] ; then
+		echo "inhoud  van si rechtsreeks opening $I" >> ~/ageditcvr.log
+		if [ "Gedit2.app" == "`echo $I | grep -o "Gedit2.app"`" ] ; then
 			exec /opt/local/bin/gedit &> /dev/null &
 		fi
 	fi		
