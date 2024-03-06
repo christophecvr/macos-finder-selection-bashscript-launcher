@@ -1,0 +1,28 @@
+#!/usr/bin/env osascript
+on run argv
+	set text item delimiters to linefeed
+	set AppPath to text of (path to current application as text)
+	set AppPathq to quoted form of text of AppPath
+	set AppName to quoted form of text of name of current application as list
+	-- posix path with trailing backslash removed.
+	set AppPathPos to quoted form of text 1 through -2 of POSIX path of AppPath
+	set AppArgs to {}
+	if argv is equal to {} then
+		set AppArgs to "There are no arguments"
+	else
+		repeat with I in argv
+			set end of AppArgs to quoted form of I
+		end repeat
+	end if
+	set dialogtext to "The Macos Hfs path is:
+" & AppPathq & "
+The Posix path is:
+" & AppPathPos & "
+The Application name is:
+" & AppName & "
+The args are:
+" & AppArgs
+	display dialog dialogtext
+end run
+
+
