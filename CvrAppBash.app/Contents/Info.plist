@@ -24,7 +24,6 @@
 	<string>1.0.1</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
-		<dict/>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
