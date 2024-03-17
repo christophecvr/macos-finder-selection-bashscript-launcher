@@ -1,6 +1,6 @@
 use framework "Foundation"
---use framework "AppKit"
 use scripting additions
+
 on run
 	set text item delimiters to linefeed
 	set myHomePath to system attribute "HOME"
@@ -54,7 +54,6 @@ on open filepath
 	-- path whitout trailing backslash since the .app is a folder
 	set AppBundle to quoted form of text 1 through -2 of POSIX path of text of (path to current application as text)
 	set AppName to name of current application as text
-	set filepathq to quoted form of POSIX path of filepath as text
 	set AppArgs to (current application's NSProcessInfo's processInfo's arguments) as list
 	set AppInfoNumbers to count of AppArgs
 	set AppRunningBin to quoted form of text item 1 of AppArgs as text
@@ -68,7 +67,18 @@ on open filepath
 			end if
 		end repeat
 	end if
-	display dialog "File Name: " & filepathq giving up after 5
+	set FilesPaths to {}
+	set FilesArgsPaths to {}
+	repeat with I in filepath
+		set end of FilesPaths to quoted form of text of POSIX path of I as text
+		if AppInfoNumbers is greater than 1 then
+			set text item delimiters to " "
+			set end of FilesArgsPaths to quoted form of text of POSIX path of I & " " & AppXargs as text
+			set text item delimiters to linefeed
+		end if
+	end repeat
+	display dialog "File Names to open: 
+" & FilesPaths giving up after 5
 	set myFile to open for access (myLogFile) with write permission
 	write "################# Start Logging of TestLaunchCvr With file To Open##############################" to myFile starting at eof
 	write "
@@ -76,7 +86,8 @@ The Application Bundle is: " & AppBundle as string to myFile starting at eof
 	write "
 The Application Name is: " & AppName to myFile starting at eof
 	write "
-The File to open is: " & filepathq to myFile starting at eof
+The Files to open are: 
+" & FilesPaths to myFile starting at eof
 	write "
 The Application Run Bin is: " & AppRunningBin to myFile starting at eof
 	if AppXargs is not equal to {} then
@@ -85,8 +96,12 @@ The Application Run Bin is: " & AppRunningBin to myFile starting at eof
 The Application Args are: " & AppXargs to myFile starting at eof
 		set text item delimiters to linefeed
 	end if
+	if FilesArgsPaths is not equal to {} then
+		write "
+The files to open with Arguments are : 
+" & FilesArgsPaths to myFile starting at eof
+	end if
 	write "
 ################# End Logging Of TestLaunchCvr With File To Open################################" to myFile starting at eof
 	close access myFile
-	--end repeat
 end open
