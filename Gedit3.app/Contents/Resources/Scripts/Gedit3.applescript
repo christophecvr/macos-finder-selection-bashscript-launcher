@@ -28,15 +28,17 @@ on run
 					set end of AppXargs to quoted form of text of I as text
 				end if
 			end repeat
+			-- open command used no file but there are arguments set
 			set text item delimiters to " "
 			do shell script "/opt/local/bin/gedit" & " " & AppXargs & " &> /dev/null &"
 			set text item delimiters to linefeed
 		else
-			do shell script "/opt/local/bin/gedit" & " &> /dev/null &"
+			-- open command used no file or argument set
+			do shell script "/opt/local/bin/gedit &> /dev/null &"
 		end if
 		--else gedit is launched by click on the application in finder
 	else
-		do shell script "/opt/local/bin/gedit" & " &> /dev/null &"
+		do shell script "/opt/local/bin/gedit &> /dev/null &"
 	end if
 end run
 
@@ -71,9 +73,11 @@ on open SelFiles
 			set aSelFile to quoted form of text of POSIX path of I as text
 			if AppArgsNumbers is greater than 1 then
 				set text item delimiters to " "
+				-- open command used in terminal with file(s) and arguments.
 				do shell script "/opt/local/bin/gedit" & " " & aSelFile & " " & AppXargs & " &> /dev/null &"
 				set text item delimiters to linefeed
 			else
+				-- open command used in terminal with one or more files. No arguments.
 				do shell script "/opt/local/bin/gedit" & " " & aSelFile & " &> /dev/null &"
 			end if
 		end repeat
@@ -81,6 +85,7 @@ on open SelFiles
 	else
 		repeat with I in SelFiles
 			set aSelFile to quoted form of text of POSIX path of I as text
+			-- opening one or more selected files in finder with Gedit.
 			do shell script "/opt/local/bin/gedit" & " " & aSelFile & " &> /dev/null &"
 		end repeat
 	end if
