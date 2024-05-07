@@ -30,15 +30,15 @@ on run
 			end repeat
 			-- open command used no file but there are arguments set
 			set text item delimiters to " "
-			do shell script "/opt/local/bin/gedit" & " " & AppXargs & " &> /dev/null &"
+			do shell script "export PATH=/opt/local/bin:/opt/local/sbin:$PATH;gedit" & " " & AppXargs & " &> /dev/null &"
 			set text item delimiters to linefeed
 		else
 			-- open command used no file or argument set
-			do shell script "/opt/local/bin/gedit &> /dev/null &"
+			do shell script "export PATH=/opt/local/bin:/opt/local/sbin:$PATH;gedit &> /dev/null &"
 		end if
 		--else gedit is launched by click on the application in finder
 	else
-		do shell script "/opt/local/bin/gedit &> /dev/null &"
+		do shell script "export PATH=/opt/local/bin:/opt/local/sbin:$PATH;gedit &> /dev/null &"
 	end if
 end run
 
@@ -74,11 +74,11 @@ on open SelFiles
 			if AppArgsNumbers is greater than 1 then
 				set text item delimiters to " "
 				-- open command used in terminal with file(s) and arguments.
-				do shell script "/opt/local/bin/gedit" & " " & aSelFile & " " & AppXargs & " &> /dev/null &"
+				do shell script "export PATH=/opt/local/bin:/opt/local/sbin:$PATH;gedit" & " " & aSelFile & " " & AppXargs & " &> /dev/null &"
 				set text item delimiters to linefeed
 			else
 				-- open command used in terminal with one or more files. No arguments.
-				do shell script "/opt/local/bin/gedit" & " " & aSelFile & " &> /dev/null &"
+				do shell script "export PATH=/opt/local/bin:/opt/local/sbin:$PATH;gedit" & " " & aSelFile & " &> /dev/null &"
 			end if
 		end repeat
 		-- the else will be used when using Gedit 3 to open selected files in finder
@@ -86,7 +86,7 @@ on open SelFiles
 		repeat with I in SelFiles
 			set aSelFile to quoted form of text of POSIX path of I as text
 			-- opening one or more selected files in finder with Gedit.
-			do shell script "/opt/local/bin/gedit" & " " & aSelFile & " &> /dev/null &"
+			do shell script "export PATH=/opt/local/bin:/opt/local/sbin:$PATH;gedit" & " " & aSelFile & " &> /dev/null &"
 		end repeat
 	end if
 end open
